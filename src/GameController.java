@@ -3,10 +3,13 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.util.Pair;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class GameController {
@@ -26,15 +29,25 @@ public class GameController {
     private GraphicsContext gc;
     private Player player;
 
+    private int bulletDelay = 0;
+    private final int bulletDelayConstant = 50;
+
+    private ArrayList<Integer> levels = new ArrayList<>(List.of(1,2,3,4,5));
+    private int currentLevel = 0;
+
+    @FXML
+    ProgressBar progressBar = new ProgressBar(0);
+
     @FXML
     public void initialize() {
+
+
         gc = gameCanvas.getGraphicsContext2D();
 
         player = new Player(sizeX, sizeY, 50, 20);
 
-        for (int i = 0; i < 5; i++) {
-            enemies.add(new Enemy(100 + i * 80, 100, 40, 20));
-        }
+
+
 
         // Wait until the canvas is added to the scene
         javafx.application.Platform.runLater(() -> {
@@ -58,8 +71,21 @@ public class GameController {
 
 
     private int update() {
-        //Updating score
+        //Updating score and bullet bar
         ScoreField.setText("Score: " + score);
+        progressBar.setProgress((double) bulletDelay /bulletDelayConstant);
+
+
+        if(bulletDelay > 0){
+            bulletDelay--;
+        }
+
+        if(enemies.isEmpty()){
+            spawnWave( levels.get(currentLevel),5);
+            bullets.clear();
+            currentAmountOfBullets = 0;
+            currentLevel++;
+        }
 
         // Movement
         if (keysPressed.contains(KeyCode.LEFT)) {
@@ -68,8 +94,9 @@ public class GameController {
         if (keysPressed.contains(KeyCode.RIGHT)) {
             player.move(5);
         }
-        if (keysPressed.contains(KeyCode.SPACE) && currentAmountOfBullets < maxAmountOfBulletsConst) {
+        if (keysPressed.contains(KeyCode.SPACE) && currentAmountOfBullets < maxAmountOfBulletsConst && bulletDelay  == 0) {
             bullets.add(new Bullet(player.getX() + 20, player.getY()));
+            bulletDelay = bulletDelayConstant;
             currentAmountOfBullets++;
 
 
@@ -77,7 +104,7 @@ public class GameController {
 
         for (Enemy enemy : enemies) {
             enemy.move(1);
-            if (enemy.getY() > sizeY + 50 )return 0;
+            if (enemy.getY() > sizeY + 50) return 0;
         }
 
         // Update bullets
@@ -106,9 +133,19 @@ public class GameController {
     private void killEnemy(Enemy enemy) {
         enemies.remove(enemy);
         //Adds a new enemy
-        enemies.add(new Enemy(100 + rand.nextInt(4) * 80, 100 + rand.nextInt(8) * 40, 40, 20));
+        //enemies.add(new Enemy(100 + rand.nextInt(4) * 80, 100 + rand.nextInt(8) * 40, 40, 20));
         score++;
 
+    }
+
+    /// Cols is max 4
+    ///  Rows is technicaly unlimited
+    private void spawnWave(int rows, int cols) {
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                enemies.add(new Enemy(100 + j * 80, 100 + i * 80, 40, 20));
+            }
+        }
     }
 
     private void render() {
@@ -125,7 +162,7 @@ public class GameController {
         }
 
         // Draw bullets
-        gc.setFill(Color.YELLOW);
+        gc.setFill(Color.RED);
         for (Bullet bullet : bullets) {
             gc.fillRect(bullet.getX(), bullet.getY(), 5, 10);
         }
