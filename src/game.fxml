@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="GameController" style="-fx-background-color: #f0f8ff;">
+    <Text fx:id="ScoreField" layoutX="10.0" layoutY="30.0" style="-fx-font-size: 24px;" text="Score: 0"/>
+    <Canvas fx:id="gameCanvas" width="600.0" height="800.0"/>
+</AnchorPane>
