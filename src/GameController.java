@@ -70,7 +70,7 @@ public class GameController {
     public void initialize() {
 
         gc = gameCanvas.getGraphicsContext2D();
-        player = new Player(sizeX, sizeY, 50, 50);
+        player = new Player(sizeX, sizeY-50, 100, 100);
         backgroundPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         backgroundPlayer.setVolume(0.5);
         backgroundPlayer.play();
@@ -126,7 +126,7 @@ public class GameController {
         if (keysPressed.contains(KeyCode.LEFT)) player.move(-5);
         if (keysPressed.contains(KeyCode.RIGHT)) player.move(5);
         if (keysPressed.contains(KeyCode.SPACE) && currentAmountOfBullets < maxAmountOfBulletsConst && bulletDelay == 0) {
-            bullets.add(new Bullet(player.getX() + 20, player.getY()));
+            bullets.add(new Bullet(player.getX() + 45, player.getY()));
             bulletDelay = bulletDelayConstant;
             currentAmountOfBullets++;
             mediaPlayer.stop();
