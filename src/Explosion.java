@@ -2,10 +2,11 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 public class Explosion {
-    private double x, y;
-    private int duration = 20; // frames the explosion will last
+    private final double x;
+    private final double y;
+    private final int duration = 20; // frames the explosion will last
     private int currentFrame = 0;
-    private Color color = Color.ORANGE;
+    private final Color color = Color.ORANGE;
 
     public Explosion(double x, double y) {
         this.x = x;
