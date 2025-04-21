@@ -1,15 +1,14 @@
-import java.awt.*;
-import java.util.Random;
+import javafx.scene.image.Image;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
+
+import java.util.Objects;
 
 public class Enemy {
-    private final double speedConstant = 0.25;
-    private final double x;
-    private double y;
-    private final double width;
-    private final double height;
-    private final Color color;
-
-    Random rand = new Random();
+    private double x, y;
+    private double width, height;
+    private Image sprite;
+    private final double speedMultiplier = 0.3;
 
     public Enemy(double x, double y, double width, double height) {
         this.x = x;
@@ -17,7 +16,11 @@ public class Enemy {
         this.width = width;
         this.height = height;
 
-        this.color = new Color(rand.nextInt(256), rand.nextInt(256), rand.nextInt(256));
+        sprite = new Image(Objects.requireNonNull(getClass().getResourceAsStream("./enemy.png")));
+    }
+
+    public void move(double dy) {
+        y += dy * speedMultiplier;
     }
 
     public boolean collidesWith(Bullet bullet) {
@@ -27,35 +30,17 @@ public class Enemy {
                 bullet.getY() + 10 > y;
     }
 
-    public void move(int dy) {
-        y += dy * speedConstant;
-
+    public void render(GraphicsContext gc) {
+        gc.drawImage(sprite, x, y, width, height);
     }
 
-    // Getters
-    public javafx.scene.paint.Paint getColor() {
+    public double getX() { return x; }
+    public double getY() { return y; }
+    public double getWidth() { return width; }
+    public double getHeight() { return height; }
 
-        int r = color.getRed();
-        int g = color.getGreen();
-        int b = color.getBlue();
-        int a = color.getAlpha();
-        double opacity = a / 255.0 ;
-        return javafx.scene.paint.Color.rgb(r, g, b, opacity);
-    }
-
-    public double getX() {
-        return x;
-    }
-
-    public double getY() {
-        return y;
-    }
-
-    public double getWidth() {
-        return width;
-    }
-
-    public double getHeight() {
-        return height;
+    // Optional: remove this if not used anymore
+    public Color getColor() {
+        return Color.GREEN;
     }
 }
