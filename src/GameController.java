@@ -51,7 +51,7 @@ public class GameController {
     @FXML
     public void initialize() {
         gc = gameCanvas.getGraphicsContext2D();
-        player = new Player(sizeX, sizeY, 50, 20);
+        player = new Player(sizeX, sizeY, 50, 50);
 
         Platform.runLater(() -> {
             gameCanvas.getScene().setOnKeyPressed(e -> keysPressed.add(e.getCode()));
@@ -76,6 +76,7 @@ public class GameController {
         gameStarted = true;
         timer.start();
     }
+
 
 
     private int update() {
