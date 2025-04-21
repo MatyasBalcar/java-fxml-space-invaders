@@ -14,6 +14,7 @@ import java.util.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import java.io.File;
+import java.util.concurrent.TimeUnit;
 
 public class GameController {
     public final int maxAmountOfBulletsConst = 30;
@@ -54,6 +55,10 @@ public class GameController {
     Media sound = new Media(new File(musicFile).toURI().toString());
     MediaPlayer mediaPlayer = new MediaPlayer(sound);
 
+    String deathFile = "deathxd.mp3";
+    Media deathSound = new Media(new File(deathFile).toURI().toString());
+    MediaPlayer deathPlayer = new MediaPlayer(deathSound);
+
 
     @FXML
     public void initialize() {
@@ -73,6 +78,12 @@ public class GameController {
             @Override
             public void handle(long now) {
                 if (gameStarted && update() != 1) {
+                    deathPlayer.play();
+                    try {
+                        TimeUnit.SECONDS.sleep(2);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
                     this.stop();
                     Platform.exit();
                 }
