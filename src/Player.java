@@ -24,7 +24,7 @@ public class Player {
     public void move(double dx) {
         x += dx * speedConstantMultiplier;
         if (x < 0) x = 0;
-        if (x > 550) x = 550; // May need to subtract sprite width for perfect bounds
+        if (x > 550) x = 550;
     }
 
     public void render(GraphicsContext gc) {
