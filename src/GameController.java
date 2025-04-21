@@ -11,6 +11,10 @@ import javafx.scene.text.Text;
 
 import java.util.*;
 
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import java.io.File;
+
 public class GameController {
     public final int maxAmountOfBulletsConst = 30;
     private final int sizeX = 275;
@@ -44,9 +48,16 @@ public class GameController {
 
     private int health = 3;
 
+
+
+    String musicFile = "shoot.mp3";
+    Media sound = new Media(new File(musicFile).toURI().toString());
+    MediaPlayer mediaPlayer = new MediaPlayer(sound);
+
+
     @FXML
     public void initialize() {
-//        System.out.println(getClass().getResource("stylesheet.css"));
+//        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
 
         gc = gameCanvas.getGraphicsContext2D();
         player = new Player(sizeX, sizeY, 50, 50);
@@ -99,6 +110,8 @@ public class GameController {
             bullets.add(new Bullet(player.getX() + 20, player.getY()));
             bulletDelay = bulletDelayConstant;
             currentAmountOfBullets++;
+            mediaPlayer.stop();
+            mediaPlayer.play();
         }
 
         for (Enemy enemy : enemies) {
