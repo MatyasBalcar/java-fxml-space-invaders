@@ -5,3 +5,8 @@
     -fx-font-weight: bold;
     -fx-border-radius: 5;
 }
+
+#ScoreField, #HealthField{
+    -fx-font-weight: bold;
+    -fx-fill: white
+}

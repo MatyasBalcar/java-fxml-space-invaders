@@ -101,7 +101,7 @@ public class GameController {
 
     private int update() {
         ScoreField.setText("Score: " + score + " points");
-        HealthField.setText("Health: " + health + "❤");
+        HealthField.setText("Health: " + health + " ❤");
         progressBar.setProgress((double) bulletDelay / bulletDelayConstant);
 
         if (bulletDelay > 0) bulletDelay--;
