@@ -4,8 +4,17 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.Button?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="GameController" style="-fx-background-color: #f0f8ff;">
     <Text fx:id="ScoreField" layoutX="10.0" layoutY="30.0" style="-fx-font-size: 24px;" text="Score: 0"/>
     <Canvas fx:id="gameCanvas" width="600.0" height="800.0"/>
     <ProgressBar  fx:id="progressBar" layoutX="400.0" layoutY="10.0" prefHeight="40.0" prefWidth="100.0" progress="0.5" />
+    <Button fx:id="startButton"
+            text="Start Game"
+            layoutX="200"
+            layoutY="350"
+            prefWidth="150"
+            prefHeight="50"
+            onAction="#onStartButtonClick"/>
+
 </AnchorPane>

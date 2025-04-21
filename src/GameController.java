@@ -3,6 +3,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
@@ -31,6 +32,13 @@ public class GameController {
     @FXML
     private Canvas gameCanvas;
 
+    @FXML
+    private Button startButton;
+
+    private boolean gameStarted = false;
+    private AnimationTimer timer;
+
+
     private GraphicsContext gc;
     private Player player;
     private Random rand = new Random();
@@ -43,25 +51,32 @@ public class GameController {
     @FXML
     public void initialize() {
         gc = gameCanvas.getGraphicsContext2D();
-        player = new Player(sizeX, sizeY, 50, 50 );
+        player = new Player(sizeX, sizeY, 50, 20);
 
         Platform.runLater(() -> {
             gameCanvas.getScene().setOnKeyPressed(e -> keysPressed.add(e.getCode()));
             gameCanvas.getScene().setOnKeyReleased(e -> keysPressed.remove(e.getCode()));
         });
 
-        AnimationTimer timer = new AnimationTimer() {
+        timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                if (update() != 1) {
+                if (gameStarted && update() != 1) {
                     this.stop();
                     Platform.exit();
                 }
-                render();
+                if (gameStarted) render();
             }
         };
+    }
+
+    @FXML
+    private void onStartButtonClick() {
+        startButton.setVisible(false);
+        gameStarted = true;
         timer.start();
     }
+
 
     private int update() {
         // Update score and UI
