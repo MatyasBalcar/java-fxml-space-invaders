@@ -27,6 +27,9 @@ public class GameController {
     public Text ScoreField;
 
     @FXML
+    public Text HealthField;
+
+    @FXML
     ProgressBar progressBar = new ProgressBar(0);
 
     @FXML
@@ -48,6 +51,7 @@ public class GameController {
     private ArrayList<Integer> levels = new ArrayList<>(List.of(1, 2, 3, 4, 5));
     private int currentLevel = 0;
 
+    private int health = 3;
     @FXML
     public void initialize() {
         gc = gameCanvas.getGraphicsContext2D();
@@ -61,6 +65,7 @@ public class GameController {
         timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
+                System.out.println(gameStarted);
                 if (gameStarted && update() != 1) {
                     this.stop();
                     Platform.exit();
@@ -82,9 +87,11 @@ public class GameController {
     private int update() {
         // Update score and UI
         ScoreField.setText("Score: " + score);
+        HealthField.setText("Health: " + health);
         progressBar.setProgress((double) bulletDelay / bulletDelayConstant);
 
         if (bulletDelay > 0) bulletDelay--;
+        if (health<=0) return 0;
 
         // Spawn new wave
         if (enemies.isEmpty() && pendingExplosions.isEmpty()) {
@@ -105,11 +112,13 @@ public class GameController {
 
         // Move enemies
         for (Enemy enemy : enemies) {
+            if (enemy.getY() > sizeY + 50) {
+                health--;
+                enemies.remove(enemy);
+            }
             enemy.move(1);
-            if (enemy.getY() > sizeY + 50) return 0;
         }
 
-        // Update bullets
         Iterator<Bullet> bulletIterator = bullets.iterator();
         while (bulletIterator.hasNext()) {
             Bullet bullet = bulletIterator.next();

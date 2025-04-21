@@ -17,4 +17,6 @@
             prefHeight="50"
             onAction="#onStartButtonClick"/>
 
+    <Text fx:id="HealthField" layoutX="10.0" layoutY="60.0" style="-fx-font-size: 24px;" text="Health: 0"/>
+
 </AnchorPane>
