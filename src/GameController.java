@@ -20,38 +20,30 @@ public class GameController {
     private final Set<KeyCode> keysPressed = new HashSet<>();
     private final List<Explosion> explosions = new ArrayList<>();
     private final Map<Enemy, Explosion> pendingExplosions = new HashMap<>();
-
+    private final int bulletDelayConstant = 50;
     public int currentAmountOfBullets = 0;
-
     @FXML
     public Text ScoreField;
-
     @FXML
     public Text HealthField;
-
     @FXML
     ProgressBar progressBar = new ProgressBar(0);
-
     @FXML
     private Canvas gameCanvas;
-
     @FXML
     private Button startButton;
-
     private boolean gameStarted = false;
     private AnimationTimer timer;
-
-
     private GraphicsContext gc;
     private Player player;
-    private Random rand = new Random();
+    private final Random rand = new Random();
     private int score = 0;
     private int bulletDelay = 0;
-    private final int bulletDelayConstant = 50;
-    private ArrayList<Integer> levels = new ArrayList<>(List.of(1, 2, 3, 4, 5));
+    private final ArrayList<Integer> levels = new ArrayList<>(List.of(1, 2, 3, 4, 5));
     private int currentLevel = 0;
 
     private int health = 3;
+
     @FXML
     public void initialize() {
         gc = gameCanvas.getGraphicsContext2D();
@@ -83,7 +75,6 @@ public class GameController {
     }
 
 
-
     private int update() {
         // Update score and UI
         ScoreField.setText("Score: " + score);
@@ -91,7 +82,7 @@ public class GameController {
         progressBar.setProgress((double) bulletDelay / bulletDelayConstant);
 
         if (bulletDelay > 0) bulletDelay--;
-        if (health<=0) return 0;
+        if (health <= 0) return 0;
 
         // Spawn new wave
         if (enemies.isEmpty() && pendingExplosions.isEmpty()) {
@@ -208,10 +199,11 @@ public class GameController {
 
     // Inner class for explosion effect
     public static class Explosion {
-        private double x, y;
-        private int duration = 20;
+        private final double x;
+        private final double y;
+        private final int duration = 20;
         private int currentFrame = 0;
-        private Color color = Color.ORANGE;
+        private final Color color = Color.ORANGE;
 
         public Explosion(double x, double y) {
             this.x = x;
