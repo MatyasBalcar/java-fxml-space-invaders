@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 import java.util.*;
@@ -32,6 +33,8 @@ public class GameController {
     @FXML
     public Text HealthField;
     @FXML
+    public Text mainText;
+    @FXML
     ProgressBar progressBar = new ProgressBar(0);
     @FXML
     private Canvas gameCanvas;
@@ -49,6 +52,7 @@ public class GameController {
 
     private int health = 3;
 
+    Font font = Font.loadFont(getClass().getResource("/pixel-font/PixelatedEleganceRegular-ovyAA.ttf").toExternalForm(), 45);
 
 
     String musicFile = "shoot.mp3";
@@ -68,7 +72,10 @@ public class GameController {
 
     @FXML
     public void initialize() {
-
+        if (font == null) {
+            System.out.println("Font failed to load!");
+        }
+        mainText.setFont(font);
         gc = gameCanvas.getGraphicsContext2D();
         player = new Player(sizeX, sizeY-50, 100, 100);
         backgroundPlayer.setCycleCount(MediaPlayer.INDEFINITE);
@@ -133,10 +140,13 @@ public class GameController {
             mediaPlayer.play();
         }
 
-        for (Enemy enemy : enemies) {
+        Iterator<Enemy> enemyIterator = enemies.iterator();
+        while (enemyIterator.hasNext()) {
+            Enemy enemy = enemyIterator.next();
             if (enemy.getY() > sizeY + 50) {
                 health--;
-                enemies.remove(enemy);
+                enemyIterator.remove();
+                continue;
             }
             enemy.move(1);
         }

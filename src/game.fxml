@@ -5,9 +5,10 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.Button?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="GameController" style="-fx-background-color: #555555;">
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="GameController" style="-fx-background-image: url('background.png')">
     <Text fx:id="ScoreField" layoutX="10.0" layoutY="30.0" style="-fx-font-size: 24px; " text="Score: 0"/>
-    <Canvas fx:id="gameCanvas" width="600.0" height="800.0"/>
+    <Canvas fx:id="gameCanvas"   width="600.0" height="800.0"/>
+    <Text fx:id="mainText" layoutX="90.0" layoutY="100.0" text="Space Invaders"/>
     <ProgressBar  fx:id="progressBar" layoutX="250.0" layoutY="10.0" prefHeight="40.0" prefWidth="100.0" progress="1" />
     <Button fx:id="startButton" style="-fx-font-size: 16px;" layoutX="225" text="Start Game" layoutY="350" prefWidth="150" prefHeight="50" onAction="#onStartButtonClick"/>
     <Text fx:id="HealthField" layoutX="460.0" layoutY="30.0" style="-fx-font-size: 24px;" text="Health: 0"/>

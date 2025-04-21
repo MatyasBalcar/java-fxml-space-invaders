@@ -10,3 +10,12 @@
     -fx-font-weight: bold;
     -fx-fill: white
 }
+
+#mainText{
+    -fx-fill: yellow;
+    -fx-font-size: 40px;
+}
+
+#gameCanvas{
+    -fx-background-image: url("background.png");
+}
