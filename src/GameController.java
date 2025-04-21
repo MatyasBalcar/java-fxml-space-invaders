@@ -46,18 +46,21 @@ public class GameController {
 
     @FXML
     public void initialize() {
+//        System.out.println(getClass().getResource("stylesheet.css"));
+
         gc = gameCanvas.getGraphicsContext2D();
         player = new Player(sizeX, sizeY, 50, 50);
 
         Platform.runLater(() -> {
             gameCanvas.getScene().setOnKeyPressed(e -> keysPressed.add(e.getCode()));
             gameCanvas.getScene().setOnKeyReleased(e -> keysPressed.remove(e.getCode()));
+            gameCanvas.getScene().getStylesheets().add(getClass().getResource("stylesheet.css").toExternalForm());
         });
+
 
         timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                System.out.println(gameStarted);
                 if (gameStarted && update() != 1) {
                     this.stop();
                     Platform.exit();
@@ -76,15 +79,13 @@ public class GameController {
 
 
     private int update() {
-        // Update score and UI
-        ScoreField.setText("Score: " + score);
-        HealthField.setText("Health: " + health);
+        ScoreField.setText("Score: " + score + " points");
+        HealthField.setText("Health: " + health + "❤");
         progressBar.setProgress((double) bulletDelay / bulletDelayConstant);
 
         if (bulletDelay > 0) bulletDelay--;
         if (health <= 0) return 0;
 
-        // Spawn new wave
         if (enemies.isEmpty() && pendingExplosions.isEmpty()) {
             spawnWave(levels.get(currentLevel), 5);
             bullets.clear();
@@ -92,7 +93,6 @@ public class GameController {
             currentLevel = Math.min(currentLevel + 1, levels.size() - 1);
         }
 
-        // Handle input
         if (keysPressed.contains(KeyCode.LEFT)) player.move(-5);
         if (keysPressed.contains(KeyCode.RIGHT)) player.move(5);
         if (keysPressed.contains(KeyCode.SPACE) && currentAmountOfBullets < maxAmountOfBulletsConst && bulletDelay == 0) {
@@ -101,7 +101,6 @@ public class GameController {
             currentAmountOfBullets++;
         }
 
-        // Move enemies
         for (Enemy enemy : enemies) {
             if (enemy.getY() > sizeY + 50) {
                 health--;
@@ -131,7 +130,6 @@ public class GameController {
             }
         }
 
-        // Update explosions
         Iterator<Map.Entry<Enemy, Explosion>> expIt = pendingExplosions.entrySet().iterator();
         while (expIt.hasNext()) {
             Map.Entry<Enemy, Explosion> entry = expIt.next();
@@ -172,32 +170,27 @@ public class GameController {
     private void render() {
         gc.clearRect(0, 0, gameCanvas.getWidth(), gameCanvas.getHeight());
 
-        // Draw player
         player.render(gc);
 
 
-        // Draw enemies
         for (Enemy enemy : enemies) {
             enemy.render(gc);
         }
 
 
-        // Draw bullets
+
         gc.setFill(Color.RED);
         for (Bullet bullet : bullets) {
             gc.fillRect(bullet.getX(), bullet.getY(), 5, 10);
         }
 
-        // Draw explosions
         for (Explosion explosion : explosions) {
             explosion.render(gc);
         }
 
-        // Clean up finished explosions
         explosions.removeIf(Explosion::isFinished);
     }
 
-    // Inner class for explosion effect
     public static class Explosion {
         private final double x;
         private final double y;

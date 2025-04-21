@@ -16,7 +16,7 @@ public class Enemy {
         this.width = width;
         this.height = height;
 
-        sprite = new Image(Objects.requireNonNull(getClass().getResourceAsStream("./enemy.png")));
+        sprite = new Image(Objects.requireNonNull(getClass().getResourceAsStream("enemy.png")));
     }
 
     public void move(double dy) {

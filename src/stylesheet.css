@@ -1,0 +1,8 @@
+
+#startButton {
+    -fx-border-color: #8787ec;
+    -fx-text-fill: white;
+    -fx-background-color: black;
+    -fx-font-weight: bold;
+    -fx-border-radius: 5;
+}

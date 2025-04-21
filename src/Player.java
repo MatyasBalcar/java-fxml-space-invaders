@@ -18,7 +18,7 @@ public class Player {
         this.height = height;
 
         // Load player sprite from resources
-        sprite = new Image(Objects.requireNonNull(getClass().getResourceAsStream("./player.png")));
+        sprite = new Image(Objects.requireNonNull(getClass().getResourceAsStream("player.png")));
     }
 
     public void move(double dx) {
