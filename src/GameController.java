@@ -59,12 +59,21 @@ public class GameController {
     Media deathSound = new Media(new File(deathFile).toURI().toString());
     MediaPlayer deathPlayer = new MediaPlayer(deathSound);
 
+    String backgroundFile = "backgroundmusic.mp3";
+    Media backgroundSound = new Media(new File(backgroundFile).toURI().toString());
+    MediaPlayer backgroundPlayer = new MediaPlayer(backgroundSound);
+
+
+
 
     @FXML
     public void initialize() {
 
         gc = gameCanvas.getGraphicsContext2D();
         player = new Player(sizeX, sizeY, 50, 50);
+        backgroundPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        backgroundPlayer.setVolume(0.5);
+        backgroundPlayer.play();
 
         Platform.runLater(() -> {
             gameCanvas.getScene().setOnKeyPressed(e -> keysPressed.add(e.getCode()));
