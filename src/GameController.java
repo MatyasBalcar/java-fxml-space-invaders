@@ -62,7 +62,6 @@ public class GameController {
 
     @FXML
     public void initialize() {
-//        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
 
         gc = gameCanvas.getGraphicsContext2D();
         player = new Player(sizeX, sizeY, 50, 50);
