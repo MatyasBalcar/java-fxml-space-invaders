@@ -54,7 +54,7 @@ public class GameController {
         Platform.runLater(() -> {
             gameCanvas.getScene().setOnKeyPressed(e -> keysPressed.add(e.getCode()));
             gameCanvas.getScene().setOnKeyReleased(e -> keysPressed.remove(e.getCode()));
-            gameCanvas.getScene().getStylesheets().add(getClass().getResource("stylesheet.css").toExternalForm());
+            gameCanvas.getScene().getStylesheets().add(Objects.requireNonNull(getClass().getResource("stylesheet.css")).toExternalForm());
         });
 
 
