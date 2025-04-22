@@ -139,7 +139,7 @@ public class GameController {
             mediaPlayer.stop();
             mediaPlayer.play();
         }
-
+        //iter
         Iterator<Enemy> enemyIterator = enemies.iterator();
         while (enemyIterator.hasNext()) {
             Enemy enemy = enemyIterator.next();
