@@ -39,8 +39,4 @@ public class Enemy {
     public double getWidth() { return width; }
     public double getHeight() { return height; }
 
-    // Optional: remove this if not used anymore
-    public Color getColor() {
-        return Color.GREEN;
-    }
 }
