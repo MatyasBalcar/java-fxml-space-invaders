@@ -72,9 +72,7 @@ public class GameController {
 
     @FXML
     public void initialize() {
-        if (font == null) {
-            System.out.println("Font failed to load!");
-        }
+
         mainText.setFont(font);
         gc = gameCanvas.getGraphicsContext2D();
         player = new Player(sizeX, sizeY-50, 100, 100);
